@@ -6,17 +6,17 @@ documents = [DIV_COMM, MAG_CART]
 # PREPARE OUR REGEXES FOR METADATA SEARCHES #
 # we'll use re.compile() here, which allows you to assign a regex pattern
 # to a variable. We'll do this for each our metadata fields.
-# 
+#
 # Also note how we're using paretheses to create two search groups. Looking
 # at title_search, see how we use one group to match on the presence of "title:".
-# 
+#
 # Also, note how in the second group is a named group -- we use ?p<name> .
-# 
+#
 # Finally, note that we're passing the re.IGNORECASE flag as an optional
 # argument to re.compile. We're doing this because it's human beings who create
-# the metadata headers at the top of Project gutenberg docs, and we want to account 
+# the metadata headers at the top of Project gutenberg docs, and we want to account
 # for possibility of "title: Some Title", "Title: Some Title", and "TITLE: Some Title").
-title_search = re.compile(r'(title:\s*)(?P<title>.*)', re.IGNORECASE)
+title_search = re.compile(r'(?:title:\s*)(?P<title>((\S*(\ )?)+)((\n(\ )+)(\S*(\ )?)*)*)', re.IGNORECASE | re.VERBOSE)
 author_search = re.compile(r'(author:)(?P<author>.*)', re.IGNORECASE)
 translator_search = re.compile(r'(translator:)(?P<translator>.*)', re.IGNORECASE)
 illustrator_search = re.compile(r'(illustrator:)(?P<illustrator>.*)', re.IGNORECASE)
@@ -32,7 +32,7 @@ for i, doc in enumerate(documents):
   author = re.search(author_search, doc)
   translator = re.search(translator_search, doc)
   illustrator = re.search(illustrator_search, doc)
-  if author: 
+  if author:
     author = author.group('author')
   if translator:
     translator = translator.group('translator')
