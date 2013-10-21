@@ -8,10 +8,10 @@ title_search = re.compile(r'(?:title:\s*)(?P<title>((\S*(\ )?)+)((\n(\ )+)(\S*(\
 author_search = re.compile(r'(author:)(?P<author>.*)', re.IGNORECASE)
 translator_search = re.compile(r'(translator:)(?P<translator>.*)', re.IGNORECASE)
 
-kws = dict.fromkeys([kw for kw in sys.argv[2:]], None)
+keyword_search = dict.fromkeys([keyword for keyword in sys.argv[2:]], None)
 
-for kw in kws:
-  kws[kw] = re.compile(r'\b' + kw + r'\b', re.IGNORECASE)
+for keyword in keyword_search:
+  keyword_search[keyword] = re.compile(r'\b' + keyword + r'\b', re.IGNORECASE)
 
 for file_name in os.listdir(directory):
     if file_name.endswith('.txt'):
@@ -34,6 +34,6 @@ for file_name in os.listdir(directory):
             print "Translator(s): {}".format(translator)
             print "\nKeyword counts for your search:"
 
-            for kw in kws:
-                print "\"{0}\": {1}".format(kw, len(re.findall(kws[kw], full_text)))
+            for keyword in keyword_search:
+                print "\"{0}\": {1}".format(keyword, len(re.findall(keyword_search[keyword], full_text)))
             print "\n" + '-' * 50 + "\n"
