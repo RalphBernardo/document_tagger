@@ -1,15 +1,15 @@
 import re
 import sys
 from pg_sample_texts import DIV_COMM, MAG_CART
- 
+
 documents = [DIV_COMM, MAG_CART]
 
 # first we need to do something with the user supplied keywords
 # which we're getting with sys.argv. Remember, the script name itself
 # is at index 0 in sys.argv, so we'll slice everything from index 1 forward.
 searches = {}
-for kw in sys.argv[1:]:
-  searches[kw] = re.compile(r'\b' + kw + r'\b', re.IGNORECASE)
+for keyword in sys.argv[1:]:
+  searches[keyword] = re.compile(r'\b' + keyword + r'\b', re.IGNORECASE)
 
 for i, doc in enumerate(documents):
   print "***" * 25
